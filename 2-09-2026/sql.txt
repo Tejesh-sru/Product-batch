@@ -1,0 +1,9 @@
+
+SQL Windows
+1.select (row_number() over (order by salary desc)) as s_no,department,emp_name,salary from employees;
+2.select (rank() over (order by salary desc)) as s_no,department,emp_name,salary from employees;
+3.select (dense_rank() over (order by salary desc)) as s_no,department,emp_name,salary from employees;
+4.select (row_number() over (partition by department)) as s_no,department,emp_name,salary from employees;
+5.select (rank() over (partition by department order by salary )) as s_no,department,emp_name,salary from employees;
+6.select (first_value(emp_name) over (partition by department order by salary )) as s_no,department,emp_name,salary from employees;
+7.select (last_value(emp_name) over (partition by department order by salary )) as s_no,department,emp_name,salary from employees;
