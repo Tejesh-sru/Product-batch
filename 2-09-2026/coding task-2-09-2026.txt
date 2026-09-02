@@ -1,0 +1,145 @@
+coding task-2-09-2026
+
+
+1.delete a node in bst
+
+
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+     TreeNode temp=root;
+     TreeNode prev=null;
+     while(temp!=null && temp.val!=key){
+       if(key>temp.val){
+         prev=temp;
+         temp=temp.right;
+       }
+       else{
+          prev=temp;
+          temp=temp.left;
+       }
+     }
+     if(temp==null) return root;
+     if(temp.left!=null && temp.right!=null){
+        TreeNode min=temp.right;
+        while(min.left!=null){
+          min=min.left;
+        }
+        temp.val=min.val;
+        temp.right=deleteNode(temp.right,min.val);
+        return root;
+
+     }
+     if(temp.left!=null){
+        temp.val=temp.left.val;
+
+     }
+     TreeNode child=null;
+     if(temp.left!=null){
+        child=temp.left;
+     }
+     else{
+        child=temp.right;
+     }
+     if(prev==null) return child;
+     if(prev.left==temp){
+        prev.left=child;
+     }
+     else{
+        prev.right=child;
+     }
+     return root;   
+    }
+}
+
+
+
+
+2.validate bst
+
+
+
+class Solution {
+    
+    TreeNode prev = null;
+    public boolean isValidBST(TreeNode root) {
+        List<Integer> list=new ArrayList<>();
+        inorder(root,list);
+        for(int i=1;i<list.size();i++){
+            if(list.get(i)<=list.get(i-1)){
+                return false;
+            }
+        }
+        return true;
+    }
+    public void inorder(TreeNode root,List<Integer> list) {
+       if(root==null){
+        return;
+       }
+       inorder(root.left,list);
+       list.add(root.val);
+       inorder(root.right,list);
+    }
+}
+
+
+
+
+3.
+
+kth smallest
+class Solution {
+    ArrayList<Integer> list=new ArrayList<>();
+    public int kthSmallest(TreeNode root, int k) {
+    ArrayList<Integer> list=new ArrayList<>();
+    inorder(root,list);
+    return list.get(k-1);
+    }
+    public void inorder(TreeNode root,ArrayList<Integer> list){
+        if(root==null){
+            return ;
+        }
+        inorder(root.left,list);
+        list.add(root.val);
+        inorder(root.right,list);
+    }
+}
+
+kth largest
+class Solution {
+    ArrayList<Integer> list=new ArrayList<>();
+    public int kthSmallest(TreeNode root, int k) {
+    ArrayList<Integer> list=new ArrayList<>();
+    inorder(root,list);
+    return list.get(list.size()-k-1);
+    }
+    public void inorder(TreeNode root,ArrayList<Integer> list){
+        if(root==null){
+            return ;
+        }
+        inorder(root.left,list);
+        list.add(root.val);
+        inorder(root.right,list);
+    }
+}
+
+
+
+4.check tree balance
+
+
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        int val=find(root);
+        if(val==-1) return false;
+        return true;
+    }
+    public int find(TreeNode root){
+        if(root==null) return 0;
+        int left=find(root.left);
+        if(left==-1) return -1;
+        int right=find(root.right);
+        if(right==-1) return -1;
+        if(Math.abs(left-right)>1) return -1;
+        return 1+Math.max(left,right);
+    }
+}
